@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RowPulser - Heart rate guided interval training for rowers.">
+  <title>RowPulser | Train Smarter. Row Stronger.</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0c1725;
+      color: #f5f8fc;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    header {
+      padding: 20px 8%;
+      border-bottom: 1px solid #293a4d;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand { font-size: 25px; font-weight: bold; }
+    .accent { color: #62e5a1; }
+    nav a { color: #d4e1ed; text-decoration: none; margin-left: 18px; }
+    .hero {
+      text-align: center;
+      padding: 100px 20px 85px;
+      background: radial-gradient(circle at top, #1c4050, #0c1725 70%);
+    }
+    h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.12; }
+    h2 { font-size: 30px; }
+    .hero p {
+      max-width: 620px;
+      margin: 25px auto;
+      color: #c5d3df;
+      font-size: 19px;
+    }
+    .button {
+      display: inline-block;
+      padding: 13px 23px;
+      margin: 8px;
+      border-radius: 9px;
+      background: #62e5a1;
+      color: #071b16;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    section { padding: 65px 8%; text-align: center; }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+      margin-top: 35px;
+    }
+    .feature {
+      background: #162638;
+      border: 1px solid #304358;
+      border-radius: 14px;
+      padding: 28px;
+      text-align: left;
+    }
+    .feature h3 { color: #62e5a1; }
+    .muted { color: #bacbda; }
+    footer {
+      border-top: 1px solid #293a4d;
+      text-align: center;
+      padding: 30px 15px;
+      color: #bacbda;
+    }
+    footer a { color: #62e5a1; }
+    @media(max-width: 600px) {
+      header { flex-direction: column; gap: 12px; }
+      nav a { margin: 0 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Row<span class="accent">Pulser</span></div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a href="mailto:support@rowpulser.com">Support</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Train Smarter.<br><span class="accent">Row Stronger.</span></h1>
+      <p>Heart rate guided interval training designed for rowers.
+         Stay in your training zone, follow structured workouts,
+         and make every session count.</p>
+      <a class="button" href="#download">Get RowPulser</a>
+    </div>
+
+    <section id="features">
+      <h2>Built for Rowers</h2>
+      <p class="muted">Simple controls. Clear feedback. Focused training.</p>
+      <div class="features">
+        <div class="feature">
+          <h3>Heart Rate Zones</h3>
+          <p>See when you're below, inside or above your target training zone.</p>
+        </div>
+        <div class="feature">
+          <h3>Structured Intervals</h3>
+          <p>Follow work and recovery intervals with clear countdowns and alerts.</p>
+        </div>
+        <div class="feature">
+          <h3>Workout Library</h3>
+          <p>Choose ready-made sessions or build your own interval workouts.</p>
+        </div>
+        <div class="feature">
+          <h3>Training Summaries</h3>
+          <p>Review your sessions and time spent in your target heart rate zone.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="download">
+      <h2>Ready for Your Next Session?</h2>
+      <p class="muted">RowPulser for iPhone and Android.</p>
+      <p>App Store and Google Play download links coming soon.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 RowPulser. All rights reserved.</p>
+    <p>Support: support@rowpulser.com (email setup pending)</p>
+  </footer>
+</body>
+</html>
