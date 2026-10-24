@@ -2,133 +2,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="RowPulser - Heart rate guided interval training for rowers.">
-  <title>RowPulser | Train Smarter. Row Stronger.</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #0c1725;
-      color: #f5f8fc;
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-    }
-    header {
-      padding: 20px 8%;
-      border-bottom: 1px solid #293a4d;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .brand { font-size: 25px; font-weight: bold; }
-    .accent { color: #62e5a1; }
-    nav a { color: #d4e1ed; text-decoration: none; margin-left: 18px; }
-    .hero {
-      text-align: center;
-      padding: 100px 20px 85px;
-      background: radial-gradient(circle at top, #1c4050, #0c1725 70%);
-    }
-    h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.12; }
-    h2 { font-size: 30px; }
-    .hero p {
-      max-width: 620px;
-      margin: 25px auto;
-      color: #c5d3df;
-      font-size: 19px;
-    }
-    .button {
-      display: inline-block;
-      padding: 13px 23px;
-      margin: 8px;
-      border-radius: 9px;
-      background: #62e5a1;
-      color: #071b16;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    section { padding: 65px 8%; text-align: center; }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 22px;
-      margin-top: 35px;
-    }
-    .feature {
-      background: #162638;
-      border: 1px solid #304358;
-      border-radius: 14px;
-      padding: 28px;
-      text-align: left;
-    }
-    .feature h3 { color: #62e5a1; }
-    .muted { color: #bacbda; }
-    footer {
-      border-top: 1px solid #293a4d;
-      text-align: center;
-      padding: 30px 15px;
-      color: #bacbda;
-    }
-    footer a { color: #62e5a1; }
-    @media(max-width: 600px) {
-      header { flex-direction: column; gap: 12px; }
-      nav a { margin: 0 8px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="RowPulser - Heart rate guided interval training for rowers.">
+<title>RowPulser | Train Smarter. Row Stronger.</title>
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: #0c1725;
+  color: #f5f8fc;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+header {
+  padding: 18px 8%;
+  border-bottom: 1px solid #293a4d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand { display: flex; align-items: center; gap: 12px; font-size: 25px; font-weight: bold; }
+.logo { width: 55px; height: 55px; object-fit: contain; border-radius: 12px; }
+.accent { color: #62e5a1; }
+nav { display: flex; flex-wrap: wrap; gap: 18px; }
+nav a { color: #d4e1ed; text-decoration: none; }
+nav a:hover, footer a:hover { text-decoration: underline; }
+.hero {
+  text-align: center;
+  padding: 95px 20px 85px;
+  background: radial-gradient(circle at top, #1c4050, #0c1725 70%);
+}
+h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.12; }
+h2 { font-size: 30px; }
+.hero p {
+  max-width: 620px;
+  margin: 25px auto;
+  color: #c5d3df;
+  font-size: 19px;
+}
+.button {
+  display: inline-block;
+  padding: 13px 23px;
+  margin: 8px;
+  border: 0;
+  border-radius: 9px;
+  background: #62e5a1;
+  color: #071b16;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { background: #89f2b9; }
+section { padding: 65px 8%; text-align: center; }
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  margin-top: 35px;
+}
+.feature, .panel {
+  background: #162638;
+  border: 1px solid #304358;
+  border-radius: 14px;
+  padding: 28px;
+}
+.feature { text-align: left; }
+.feature h3 { color: #62e5a1; }
+.muted { color: #bacbda; }
+.panel { max-width: 700px; margin: 30px auto 0; }
+.feedback-form { text-align: left; }
+.feedback-form label { display: block; margin: 16px 0 6px; font-weight: bold; }
+.feedback-form input, .feedback-form select, .feedback-form textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #52667b;
+  border-radius: 8px;
+  background: #0c1725;
+  color: white;
+  font: inherit;
+}
+.feedback-form textarea { min-height: 140px; resize: vertical; }
+.feedback-form .button { margin: 22px 0 0; }
+.sally {
+  max-width: 700px;
+  margin: 30px auto 0;
+}
+.placeholder {
+  border: 1px dashed #647b8e;
+  border-radius: 12px;
+  padding: 45px 20px;
+  color: #bacbda;
+}
+footer {
+  border-top: 1px solid #293a4d;
+  text-align: center;
+  padding: 30px 15px;
+  color: #bacbda;
+}
+footer a { color: #62e5a1; }
+@media(max-width: 600px) {
+  header { flex-direction: column; }
+  nav { justify-content: center; gap: 12px; }
+  section { padding: 50px 6%; }
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">Row<span class="accent">Pulser</span></div>
-    <nav>
-      <a href="#features">Features</a>
-      <a href="#download">Download</a>
-      <a href="mailto:support@rowpulser.com">Support</a>
-    </nav>
-  </header>
+<header>
+  <div class="brand">
+    <img class="logo" src="rowpulser-logo.png" alt="RowPulser logo">
+    <span>Row<span class="accent">Pulser</span></span>
+  </div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#sally">Meet Sally</a>
+    <a href="#download">Download</a>
+    <a href="#feedback">Feedback</a>
+  </nav>
+</header>
 
-  <main>
-    <div class="hero">
-      <h1>Train Smarter.<br><span class="accent">Row Stronger.</span></h1>
-      <p>Heart rate guided interval training designed for rowers.
-         Stay in your training zone, follow structured workouts,
-         and make every session count.</p>
-      <a class="button" href="#download">Get RowPulser</a>
-    </div>
+<main>
+  <div class="hero">
+    <h1>Train Smarter.<br><span class="accent">Row Stronger.</span></h1>
+    <p>Heart rate guided interval training designed for rowers.
+       Stay in your training zone, follow structured workouts,
+       and make every session count.</p>
+    <a class="button" href="#download">Get RowPulser</a>
+  </div>
 
-    <section id="features">
-      <h2>Built for Rowers</h2>
-      <p class="muted">Simple controls. Clear feedback. Focused training.</p>
-      <div class="features">
-        <div class="feature">
-          <h3>Heart Rate Zones</h3>
-          <p>See when you're below, inside or above your target training zone.</p>
-        </div>
-        <div class="feature">
-          <h3>Structured Intervals</h3>
-          <p>Follow work and recovery intervals with clear countdowns and alerts.</p>
-        </div>
-        <div class="feature">
-          <h3>Workout Library</h3>
-          <p>Choose ready-made sessions or build your own interval workouts.</p>
-        </div>
-        <div class="feature">
-          <h3>Training Summaries</h3>
-          <p>Review your sessions and time spent in your target heart rate zone.</p>
-        </div>
+  <section id="features">
+    <h2>Built for Rowers</h2>
+    <p class="muted">Simple controls. Clear feedback. Focused training.</p>
+    <div class="features">
+      <div class="feature">
+        <h3>Heart Rate Zones</h3>
+        <p>See when you're below, inside or above your target training zone.</p>
       </div>
-    </section>
+      <div class="feature">
+        <h3>Structured Intervals</h3>
+        <p>Follow work and recovery intervals with clear countdowns and alerts.</p>
+      </div>
+      <div class="feature">
+        <h3>Workout Library</h3>
+        <p>Choose ready-made sessions or build your own interval workouts.</p>
+      </div>
+      <div class="feature">
+        <h3>Training Summaries</h3>
+        <p>Review your sessions and time spent in your target heart rate zone.</p>
+      </div>
+    </div>
+  </section>
 
-    <section id="download">
-      <h2>Ready for Your Next Session?</h2>
-      <p class="muted">RowPulser for iPhone and Android.</p>
-      <p>App Store and Google Play download links coming soon.</p>
-    </section>
-  </main>
+  <section id="sally">
+    <h2>Meet Sally</h2>
+    <p class="muted">Your guide to getting started with RowPulser.</p>
+    <div class="sally">
+      <div class="placeholder">
+        Sally's RowPulser video demonstration is coming soon.
+      </div>
+      <p>Discover how to connect your heart rate monitor,
+         select a workout and train in your target zone.</p>
+    </div>
+  </section>
 
-  <footer>
-    <p>&copy; 2026 RowPulser. All rights reserved.</p>
-    <p>Support: support@rowpulser.com (email setup pending)</p>
-  </footer>
+  <section id="download">
+    <h2>Ready for Your Next Session?</h2>
+    <p class="muted">RowPulser for iPhone and Android.</p>
+    <p>App Store and Google Play download links coming soon.</p>
+  </section>
+
+  <section id="feedback">
+    <h2>Help Us Improve RowPulser</h2>
+    <p class="muted">Suggestions, feature requests and bug reports are welcome.</p>
+    <div class="panel">
+      <form class="feedback-form" id="feedbackForm">
+        <label for="name">Your name</label>
+        <input id="name" name="name" required maxlength="100">
+
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" required maxlength="200">
+
+        <label for="type">Feedback type</label>
+        <select id="type" name="type" required>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Feature request">Feature request</option>
+          <option value="Bug report">Bug report</option>
+          <option value="General feedback">General feedback</option>
+        </select>
+
+        <label for="message">Your feedback</label>
+        <textarea id="message" name="message" required maxlength="5000"
+          placeholder="Tell us what you think..."></textarea>
+
+        <button class="button" type="submit">Prepare Feedback Email</button>
+        <p class="muted">This opens your email application to send your feedback.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 RowPulser. All rights reserved.</p>
+  <p>Contact: <a href="mailto:Sally@rowpulser.com">Sally@rowpulser.com</a></p>
+  <p class="muted">Email address setup pending.</p>
+</footer>
+
+<script>
+document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const type = document.getElementById("type").value;
+  const message = document.getElementById("message").value;
+
+  const subject = encodeURIComponent("RowPulser Feedback: " + type);
+  const body = encodeURIComponent(
+    "Name: " + name + "\n" +
+    "Email: " + email + "\n" +
+    "Type: " + type + "\n\n" +
+    "Feedback:\n" + message
+  );
+
+  window.location.href = "mailto:Sally@rowpulser.com?subject=" +
+    subject + "&body=" + body;
+});
+</script>
 </body>
 </html>
