@@ -20,7 +20,7 @@ section{padding:65px 6%;text-align:center}section h2{font-size:clamp(27px,3.5vw,
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:20px;max-width:1160px;margin:35px auto 0}
 .feature,.panel{background:var(--panel);border:1px solid #2b5074;border-radius:16px;padding:26px}.feature{text-align:left}.feature h3{margin:0 0 12px;font-size:20px}.feature p{margin:0}
 .panel{max-width:740px;margin:28px auto 0}.video-embed{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;display:block;background:#081b30}.video-placeholder{border:1px dashed #7d9cb8;border-radius:14px;aspect-ratio:16/9;display:grid;place-items:center;color:var(--muted);background:#081b30;padding:25px}
-form{text-align:left}label{display:block;font-weight:700;margin:15px 0 6px}input,select,textarea{width:100%;border:1px solid #6e8ca9;border-radius:8px;padding:12px;background:#081b30;color:white;font:inherit}textarea{min-height:140px;resize:vertical}form button{margin-top:20px}
+form{text-align:left}label{display:block;font-weight:700;margin:15px 0 6px}input,select,textarea{width:100%;border:1px solid #6e8ca9;border-radius:8px;padding:12px;background:#081b30;color:white;font:inherit}textarea{min-height:140px;resize:vertical}form button{margin-top:20px}.consent{display:flex;gap:12px;align-items:flex-start;font-weight:400}.consent input{width:20px;height:20px;flex:0 0 20px;margin-top:4px}.form-note{font-size:14px;color:var(--muted)}
 dialog{background:#102c4a;color:#f8fbff;border:1px solid #4a7395;border-radius:18px;padding:30px;max-width:min(90vw,440px);text-align:center;box-shadow:0 20px 65px #0009}dialog::backdrop{background:#000a}dialog h2{margin-top:0}dialog .button{margin-top:12px}
 footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:var(--muted)}footer a{color:white}
 @media(max-width:640px){header{flex-direction:column}.brand img{width:60px;height:60px}nav{justify-content:center;gap:15px}section{padding:48px 5%}.hero{padding-top:36px}}
@@ -29,7 +29,7 @@ footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:va
 <body>
 <header>
 <a class="brand" href="#top" aria-label="RowPulser home"><img src="rowpulser-logo.png" alt="RowPulser rowing heart logo"></a>
-<nav aria-label="Main navigation"><a href="#features">Features</a><a href="#demo">Demo</a><a href="#download">Download</a><a href="#feedback">Feedback</a></nav>
+<nav aria-label="Main navigation"><a href="#features">Features</a><a href="#demo">Demo</a><a href="#download">Download</a><a href="#feedback">Beta testing</a></nav>
 </header>
 <main id="top">
 <div class="hero">
@@ -48,37 +48,45 @@ footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:va
 </section>
 <section id="demo"><h2>See RowPulser in action</h2><div class="panel"><iframe class="video-embed" src="https://www.youtube-nocookie.com/embed/tqWmbpJVHW4" title="RowPulser demonstration featuring Sally Ripley" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></section>
 <section id="download"><h2>Get RowPulser</h2><p class="muted">For iPhone and Android.</p><p>App Store and Google Play links will be added here.</p></section>
-<section id="feedback"><h2>Help improve RowPulser</h2><p class="muted">Suggestions, feature requests and bug reports are welcome.</p>
-<div class="panel"><form id="feedbackForm" action="https://formspree.io/f/xgaavbrr" method="POST"><label for="name">Name</label><input id="name" name="name" required maxlength="100"><label for="email">Email</label><input id="email" name="email" type="email" required maxlength="200"><label for="type">Feedback type</label><select id="type" name="feedback_type"><option>Suggestion</option><option>Feature request</option><option>Bug report</option><option>General feedback</option></select><label for="message">Your feedback</label><textarea id="message" name="message" required maxlength="5000" placeholder="Tell us what you think..."></textarea><button class="button" type="submit">Send feedback</button><p id="formStatus" role="status" aria-live="polite" class="muted"></p></form></div></section>
+<section id="feedback" aria-labelledby="betaTitle"><h2 id="betaTitle">Join the RowPulser beta</h2><p class="muted">Help shape the next release. Choose your platform and we’ll email you when a testing place is available.</p>
+<div class="panel"><form id="betaSignupForm" action="https://formspree.io/f/xgaavbrr" method="POST">
+<input type="hidden" name="_subject" value="RowPulser beta test signup">
+<label for="name">Name</label><input id="name" name="name" autocomplete="name" required maxlength="100">
+<label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200">
+<label for="platform">Which platform would you like to test?</label><select id="platform" name="platform" required><option value="" disabled selected>Select Android or iOS</option><option value="Android">Android</option><option value="iOS">iOS</option></select>
+<label class="consent" for="betaConsent"><input id="betaConsent" name="beta_contact_consent" type="checkbox" value="Yes" required><span>I’d like to receive emails about RowPulser beta testing for my selected platform.</span></label>
+<p class="form-note">Your signup is sent through Formspree. We’ll use these details to organise beta testing and contact you about participation. You can withdraw by emailing <a href="mailto:Sally@rowpulser.com">Sally@rowpulser.com</a>. Read our <a href="/privacy.html">Privacy Policy</a>.</p>
+<button class="button" type="submit">Sign up for beta testing</button><p id="formStatus" role="status" aria-live="polite" class="muted"></p></form></div></section>
 </main>
-<dialog id="feedbackThanks" aria-labelledby="thanksTitle"><h2 id="thanksTitle">A note from Sally</h2><p>Thanks for taking the time to send feedback!</p><p>— Sally x</p><button class="button" id="closeThanks" type="button">Close</button></dialog>
-<footer><p>© 2026 RowPulser. All rights reserved.</p><p>Contact: <a href="mailto:Sally@rowpulser.com">Sally@rowpulser.com</a></p></footer>
+<dialog id="feedbackThanks" aria-labelledby="thanksTitle"><h2 id="thanksTitle">You’re on the beta list</h2><p>Thanks for signing up! We’ll email you when a testing place is available for your chosen platform.</p><p>— Sally x</p><button class="button" id="closeThanks" type="button">Close</button></dialog>
+<footer><p>© 2026 RowPulser. All rights reserved.</p><p><a href="/privacy.html">Privacy Policy</a></p><p>Contact: <a href="mailto:Sally@rowpulser.com">Sally@rowpulser.com</a></p></footer>
 <script>
-const feedbackForm = document.getElementById('feedbackForm');
+const betaSignupForm = document.getElementById('betaSignupForm');
 const formStatus = document.getElementById('formStatus');
 const thanksDialog = document.getElementById('feedbackThanks');
 document.getElementById('closeThanks').addEventListener('click', () => thanksDialog.close());
-feedbackForm.addEventListener('submit', async (event) => {
+betaSignupForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const button = feedbackForm.querySelector('button[type="submit"]');
+  const button = betaSignupForm.querySelector('button[type="submit"]');
   button.disabled = true;
   button.textContent = 'Sending...';
   formStatus.textContent = '';
   try {
-    const response = await fetch(feedbackForm.action, {
+    const response = await fetch(betaSignupForm.action, {
       method: 'POST',
-      body: new FormData(feedbackForm),
+      body: new FormData(betaSignupForm),
       headers: { 'Accept': 'application/json' }
     });
     if (!response.ok) throw new Error('Submission failed');
-    feedbackForm.reset();
+    betaSignupForm.reset();
     thanksDialog.showModal();
   } catch (error) {
-    formStatus.textContent = 'Sorry, we could not send your feedback. Please try again or email sally@rowpulser.com.';
+    formStatus.textContent = 'Sorry, we could not save your signup. Please try again or email Sally@rowpulser.com.';
   } finally {
     button.disabled = false;
-    button.textContent = 'Send feedback';
+    button.textContent = 'Sign up for beta testing';
   }
 });
 </script>
 </body></html>
+
