@@ -24,6 +24,7 @@ form{text-align:left}label{display:block;font-weight:700;margin:15px 0 6px}input
 dialog{background:#102c4a;color:#f8fbff;border:1px solid #4a7395;border-radius:18px;padding:30px;max-width:min(90vw,440px);text-align:center;box-shadow:0 20px 65px #0009}dialog::backdrop{background:#000a}dialog h2{margin-top:0}dialog .button{margin-top:12px}
 footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:var(--muted)}footer a{color:white}
 @media(max-width:640px){header{flex-direction:column}.brand img{width:60px;height:60px}nav{justify-content:center;gap:15px}section{padding:48px 5%}.hero{padding-top:36px}}
+.signup-embed{max-width:740px;margin:28px auto 0}
 </style>
 </head>
 <body>
@@ -39,44 +40,10 @@ footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:va
 </div>
 <section id="demo"><h2>See RowPulser in action</h2><div class="panel"><iframe class="video-embed" src="https://www.youtube-nocookie.com/embed/tqWmbpJVHW4" title="RowPulser demonstration featuring Sally Ripley" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></section>
 <section id="feedback" aria-labelledby="betaTitle"><h2 id="betaTitle">Join the RowPulser beta</h2><p class="muted">Help shape the next release. Choose your platform and we’ll email you when a testing place is available.</p>
-<div class="panel"><form id="betaSignupForm" action="https://formspree.io/f/xgaavbrr" method="POST">
-<input type="hidden" name="_subject" value="RowPulser beta test signup">
-<label for="name">Name</label><input id="name" name="name" autocomplete="name" required maxlength="100">
-<label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200">
-<label for="platform">Which platform would you like to test?</label><select id="platform" name="platform" required><option value="" disabled selected>Select Android or iOS</option><option value="Android">Android</option><option value="iOS">iOS</option></select>
-<label class="consent" for="betaConsent"><input id="betaConsent" name="beta_contact_consent" type="checkbox" value="Yes" required><span>I’d like to receive emails about RowPulser beta testing for my selected platform.</span></label>
-<p class="form-note">Your signup is sent through Formspree. We’ll use these details to organise beta testing and contact you about participation. You can withdraw by emailing <a href="mailto:Sally@rowpulser.com">Sally@rowpulser.com</a>. Read our <a href="/privacy.html">Privacy Policy</a>.</p>
-<button class="button" type="submit">Sign up for beta testing</button><p id="formStatus" role="status" aria-live="polite" class="muted"></p></form></div></section>
+<p class="form-note">By signing up, you ask us to email you about RowPulser beta testing. Phone and heart-rate strap models are optional and help us plan compatibility testing. <a href="/privacy.html">Privacy Policy</a>.</p>
+<div class="signup-embed"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLScOo7pnir6_nJ6Dh5iNx6LCM8UYf14MfHetyXo6r_lUjqTsyQ/viewform?embedded=true" title="RowPulser beta signup form" width="100%" height="1450" style="border:0;display:block;border-radius:12px;background:#f0ebf8" loading="lazy">Loading signup form…</iframe></div>
+<p class="form-note">Having trouble with the form? <a href="https://docs.google.com/forms/d/e/1FAIpQLScOo7pnir6_nJ6Dh5iNx6LCM8UYf14MfHetyXo6r_lUjqTsyQ/viewform" target="_blank" rel="noopener">Open the signup form</a>.</p></section>
 </main>
-<dialog id="feedbackThanks" aria-labelledby="thanksTitle"><h2 id="thanksTitle">You’re on the beta list</h2><p>Thanks for signing up! We’ll email you when a testing place is available for your chosen platform.</p><p>— Sally x</p><button class="button" id="closeThanks" type="button">Close</button></dialog>
 <footer><p>© 2026 RowPulser. All rights reserved.</p><p><a href="/privacy.html">Privacy Policy</a></p><p>Contact: <a href="mailto:Sally@rowpulser.com">Sally@rowpulser.com</a></p></footer>
-<script>
-const betaSignupForm = document.getElementById('betaSignupForm');
-const formStatus = document.getElementById('formStatus');
-const thanksDialog = document.getElementById('feedbackThanks');
-document.getElementById('closeThanks').addEventListener('click', () => thanksDialog.close());
-betaSignupForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const button = betaSignupForm.querySelector('button[type="submit"]');
-  button.disabled = true;
-  button.textContent = 'Sending...';
-  formStatus.textContent = '';
-  try {
-    const response = await fetch(betaSignupForm.action, {
-      method: 'POST',
-      body: new FormData(betaSignupForm),
-      headers: { 'Accept': 'application/json' }
-    });
-    if (!response.ok) throw new Error('Submission failed');
-    betaSignupForm.reset();
-    thanksDialog.showModal();
-  } catch (error) {
-    formStatus.textContent = 'Sorry, we could not save your signup. Please try again or email Sally@rowpulser.com.';
-  } finally {
-    button.disabled = false;
-    button.textContent = 'Sign up for beta testing';
-  }
-});
-</script>
 </body></html>
 
