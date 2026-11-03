@@ -1,5 +1,6 @@
 import {writeSallyLog} from '../_lib/logger.js';
 import { KNOWLEDGE } from '../_lib/knowledge.js';
+import { playfulReply } from '../_lib/personality.js';
 const allowedOrigin = 'https://rowpulser.com';
 const MAX_CHARS = 12000;
 export async function onRequestPost({ request, env }) {
@@ -11,6 +12,13 @@ export async function onRequestPost({ request, env }) {
   if (!messages.length || messages.length>12 || messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string'||m.content.length>MAX_CHARS)) return Response.json({error:'Message limit exceeded'},{status:400});
   // Per-request caps; configure Cloudflare rate limiting / Turnstile before public launch.
   const input=messages.slice(-10).map(m=>({role:m.role,content:m.content}));
+  const playful = playfulReply(input);
+  if (playful?.reply) {
+    const conversationId=String(body.conversationId||'').slice(0,80);
+    if(conversationId) await writeSallyLog(env,{conversationId,category:'Sally personality Easter egg',summary:'Brief playful exchange',diagnosis:'Scripted reply; transcript not retained',escalated:'No',responded:'No',inputTokens:0,outputTokens:0,estimatedCostUSD:'0.000000'});
+    return Response.json({reply:playful.reply,usage:{total_tokens:0},escalation:null,resetPersonality:playful.reset},{headers:{'Cache-Control':'no-store'}});
+  }
+  if (playful?.reset) input.splice(0,input.length-1);
   const scopePolicy = `SCOPE AND COST CONTROL — HIGHEST PRIORITY:
 You are a narrowly scoped RowPulser product support assistant, NOT a general chatbot.
 Allowed: brief greetings and light banter; RowPulser features, training zones and rowing heart-rate training; detailed troubleshooting of RowPulser interactions with iOS/Android phones, watches, chest straps, Bluetooth, permissions, device compatibility and pasted event logs; bug reports and feature requests related to RowPulser.
@@ -39,5 +47,5 @@ For on-topic simple questions, respond briefly (usually 1-3 sentences). For genu
   const conversationId=String(body.conversationId||'').slice(0,80);
   const estimatedCostUSD=((usage.prompt_tokens||0)*0.0000004+(usage.completion_tokens||0)*0.0000016).toFixed(6); // illustrative rates; verify current model pricing
   if(conversationId) await writeSallyLog(env,{conversationId,category,summary:category,diagnosis:'AI reply provided; transcript not retained',escalated:'No',responded:'No',inputTokens:usage.prompt_tokens||0,outputTokens:usage.completion_tokens||0,estimatedCostUSD});
-  return Response.json({reply,usage,escalation},{headers:{'Cache-Control':'no-store'}});
+  return Response.json({reply,usage,escalation,resetPersonality:Boolean(playful?.reset)},{headers:{'Cache-Control':'no-store'}});
 }
