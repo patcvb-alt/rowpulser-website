@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-function chatHarness({escalation=null,failReport=false}={}) {
+function chatHarness({escalation=null,failReport=false,resetPersonality=false}={}) {
   class Element {
     constructor(){this.handlers={};this.children=[];this.style={};this.value='';this.hidden=false;this.scrollHeight=48;this.attributes={};}
     addEventListener(type,fn){this.handlers[type]=fn;}
@@ -19,7 +19,7 @@ function chatHarness({escalation=null,failReport=false}={}) {
   const sandbox={document,crypto:{randomUUID:()=> 'test-conversation'},fetch:async(url,options)=>{
     requests.push({url,body:JSON.parse(options.body)});
     if(url==='/api/sally-escalate')return {ok:!failReport,json:async()=>({ok:!failReport})};
-    return {ok:true,json:async()=>({reply:'I can help with that.',escalation})};
+    return {ok:true,json:async()=>({reply:'I can help with that.',escalation,resetPersonality})};
   },SyntaxError};
   vm.runInNewContext(fs.readFileSync(new URL('../assets/sally-chat.js',import.meta.url),'utf8'),sandbox);
   const el=id=>document.getElementById(id);
@@ -61,4 +61,13 @@ test('failed logging never claims success and permits explicit retry',async()=>{
  const h=chatHarness({escalation:{type:'issue',summary:'Bluetooth remains disconnected after troubleshooting.'},failReport:true});
  await h.send('Still not working');await h.send('use summary');await h.send('tester@example.com');await h.send('send');
  assert.match(h.text(),/couldn’t confirm/);assert.ok(!h.text().includes('have been sent'));await h.send('send');assert.equal(h.requests.length,3);
+});
+
+
+test('reset clears the playful conversation before the next support request',async()=>{
+ const h=chatHarness({resetPersonality:true});
+ await h.send('A playful message');
+ await h.send('Help with my strap');
+ assert.equal(h.requests[1].body.messages.length,1);
+ assert.equal(h.requests[1].body.messages[0].content,'Help with my strap');
 });
