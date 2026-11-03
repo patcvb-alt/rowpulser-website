@@ -142,7 +142,7 @@
         if (!response.ok) throw new Error(data.error || 'Sally is temporarily unavailable. Please try again.');
         pending.textContent = data.reply;
         if (data.resetPersonality) history.length = 0;
-        history.push({ role: 'assistant', content: data.reply });
+        else history.push({ role: 'assistant', content: data.reply });
         if (history.length > 10) history.splice(0, history.length - 10);
         if (data.escalation && ['issue', 'feature'].includes(data.escalation.type)) beginReport(data.escalation);
       } catch (error) {
