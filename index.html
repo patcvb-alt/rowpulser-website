@@ -26,16 +26,7 @@ footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:va
 @media(max-width:640px){header{flex-direction:column}.brand img{width:60px;height:60px}nav{justify-content:center;gap:15px}section{padding:48px 5%}.hero{padding-top:36px}}
 .signup-embed{max-width:740px;margin:28px auto 0}
 </style>
-<style>
-.sally-launch{position:fixed;right:18px;bottom:18px;z-index:90;border:2px solid #fff;border-radius:22px;background:#102c4a;color:white;padding:13px 16px;font:700 16px system-ui;box-shadow:0 8px 35px #0009;cursor:pointer;max-width:180px}
-.sally-launch:hover{background:#194268}.sally-launch:focus-visible,.sally-chat button:focus-visible{outline:3px solid #ff4253}
-.sally-chat[hidden],.sally-launch[hidden],#sallyReport[hidden]{display:none}
-.sally-chat{position:fixed;right:18px;bottom:18px;z-index:91;width:min(390px,calc(100vw - 24px));height:min(570px,calc(100dvh - 40px));display:flex;flex-direction:column;border:1px solid #55718c;border-radius:18px;background:#102c4a;box-shadow:0 14px 50px #000b;overflow:hidden;text-align:left}
-.sally-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 15px;background:#07172b}.sally-head strong{font-size:18px}.sally-head button{background:transparent;border:1px solid #8da9c4;color:white;border-radius:8px;padding:5px 11px;cursor:pointer}
-.sally-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}.sally-msg{padding:10px 13px;border-radius:14px;max-width:92%;white-space:pre-wrap;overflow-wrap:anywhere}.sally-msg.bot{background:#244b6d;align-self:flex-start}.sally-msg.user{background:#9d1424;align-self:flex-end}
-.sally-form{display:flex;gap:8px;padding:12px;border-top:1px solid #55718c}.sally-form textarea{min-height:44px;max-height:110px;resize:vertical}.sally-form button{border:0;border-radius:8px;background:#f52637;color:white;padding:8px 14px;font-weight:700;cursor:pointer}.sally-note{font-size:12px;color:#d1deeb;margin:0;padding:0 14px 12px}
-@media(max-width:480px){.sally-launch{right:10px;bottom:10px}.sally-chat{right:6px;bottom:6px;width:calc(100vw - 12px);height:min(540px,calc(100dvh - 12px))}}
-</style>
+<link rel="stylesheet" href="/assets/sally-chat.css">
 </head>
 <body>
 <header>
@@ -56,43 +47,24 @@ footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:va
 <p class="form-note">Having trouble with the form? <a href="https://docs.google.com/forms/d/e/1FAIpQLScOo7pnir6_nJ6Dh5iNx6LCM8UYf14MfHetyXo6r_lUjqTsyQ/viewform" target="_blank" rel="noopener">Open the signup form</a>.</p></section>
 </main>
 <footer><p>© 2026 RowPulser. All rights reserved.</p><p><a href="/privacy.html">Privacy Policy</a></p><p>Contact: <a href="mailto:Sally@rowpulser.com">Sally@rowpulser.com</a></p></footer>
-<button class="sally-launch" id="sallyLaunch" type="button" aria-controls="sallyChat" aria-expanded="false">👋 Sally · Need help?</button>
+<button class="sally-launch" id="sallyLaunch" type="button" aria-controls="sallyChat" aria-expanded="false">
+ <picture><source media="(prefers-reduced-motion: reduce)" srcset="/assets/sally-idle.png"><img class="sally-avatar" src="/assets/sally-idle.gif" alt="" width="62" height="62"></picture>
+ <span>Ask Sally<span>Your RowPulser helper</span></span>
+</button>
 <aside class="sally-chat" id="sallyChat" aria-label="Chat with Sally" hidden>
- <div class="sally-head"><strong>🚣 Sally Ripley</strong><button type="button" id="sallyClose" aria-label="Minimize Sally chat">Minimize −</button></div>
- <div class="sally-messages" id="sallyMessages" role="log" aria-live="polite"><div class="sally-msg bot">Hi! I'm Sally. Ask me about RowPulser, training zones or your heart-rate monitor. You can paste an event log here if you'd like me to take a look.</div></div>
- <form id="sallyForm" class="sally-form"><label for="sallyInput" class="sr-only" style="position:absolute;left:-9999px">Your message</label><textarea id="sallyInput" placeholder="Ask Sally…" maxlength="12000" required rows="2"></textarea><button id="sallySend" type="submit">Send</button></form>
- <button type="button" id="sallyReportToggle" style="margin:0 12px 8px;background:#244b6d;color:white;border:1px solid #8da9c4;border-radius:8px;padding:8px;cursor:pointer">Report to development team</button>
- <form id="sallyReport" hidden style="padding:10px 14px;overflow:auto;max-height:250px">
-  <label for="sallySummary">Issue summary (review before sharing)</label><textarea id="sallySummary" required minlength="10" maxlength="1500" placeholder="What happened, and what have you tried?"></textarea>
-  <label for="sallyEmail">Your email</label><input id="sallyEmail" type="email" required autocomplete="email">
-  <label for="sallyEmailConfirm">Confirm email</label><input id="sallyEmailConfirm" type="email" required autocomplete="off">
-  <label class="consent"><input id="sallyConsent" type="checkbox" required><span>I agree to share this summary and my email with the RowPulser development team for follow-up.</span></label>
-  <button type="submit" class="button" id="sallyReportSend">Send report</button>
- </form>
- <p class="sally-note">AI assistance can make mistakes. Messages are sent to an AI service to generate replies. Please don't paste passwords or sensitive personal data. <a href="/privacy.html">Privacy</a>.</p>
-</aside>
-<script>
-(()=>{const launch=document.getElementById('sallyLaunch'),chat=document.getElementById('sallyChat'),close=document.getElementById('sallyClose'),form=document.getElementById('sallyForm'),input=document.getElementById('sallyInput'),log=document.getElementById('sallyMessages'),send=document.getElementById('sallySend');const history=[];const conversationId=crypto.randomUUID?crypto.randomUUID():String(Date.now());
-function toggle(open){chat.hidden=!open;launch.hidden=open;launch.setAttribute('aria-expanded',String(open));if(open)input.focus();else launch.focus()}
-launch.addEventListener('click',()=>toggle(true));close.addEventListener('click',()=>toggle(false));
-function add(text,kind){const d=document.createElement('div');d.className='sally-msg '+kind;d.textContent=text;log.append(d);log.scrollTop=log.scrollHeight;return d}
-form.addEventListener('submit',async e=>{e.preventDefault();const message=input.value.trim();if(!message||send.disabled)return;input.value='';add(message,'user');history.push({role:'user',content:message});send.disabled=true;const pending=add('Sally is thinking…','bot');
-try{const response=await fetch('/api/sally',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-10),conversationId})});const data=await response.json();if(!response.ok)throw Error(data.error||'Service unavailable');pending.textContent=data.reply;history.push({role:'assistant',content:data.reply});if(history.length>10)history.splice(0,history.length-10)}
-catch(err){pending.textContent=err.message||'Sorry, please try again.';history.pop()}finally{send.disabled=false;input.focus()}});
-const reportToggle=document.getElementById('sallyReportToggle'),report=document.getElementById('sallyReport');
-reportToggle.addEventListener('click',()=>{report.hidden=!report.hidden;if(!report.hidden)document.getElementById('sallySummary').focus()});
-report.addEventListener('submit',async e=>{
- e.preventDefault();
- const summary=document.getElementById('sallySummary').value.trim(),email=document.getElementById('sallyEmail').value.trim(),confirmEmail=document.getElementById('sallyEmailConfirm').value.trim();
- if(email!==confirmEmail){add('Those email addresses do not match. Please check them.','bot');return}
- const button=document.getElementById('sallyReportSend');button.disabled=true;
- try{
- const response=await fetch('/api/sally-escalate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({conversationId,summary,email,confirmEmail,consent:document.getElementById('sallyConsent').checked})});
- const data=await response.json();if(!response.ok||!data.ok)throw Error(data.error||'Could not submit');
- add('Thanks! Your report has been sent to the RowPulser development team. Someone can follow up by email.','bot');report.reset();report.hidden=true;
- }catch(err){add(err.message+' You can also email Sally@rowpulser.com.','bot')}finally{button.disabled=false}
-});
-})();
-</script>
-</body></html>
+ <div class="sally-head">
+  <picture><source media="(prefers-reduced-motion: reduce)" srcset="/assets/sally-active.png"><img class="sally-avatar" src="/assets/sally-active.gif" alt="Sally Ripley" width="60" height="60"></picture>
+  <div class="sally-identity"><strong>Sally Ripley</strong><span class="sally-status" id="sallyStatus">RowPulser support</span></div>
+  <button type="button" id="sallyClose" aria-label="Minimize Sally chat">−</button>
+ </div>
+ <div class="sally-messages" id="sallyMessages" role="log" aria-live="polite" aria-relevant="additions text"><div class="sally-msg bot">Hi, I’m Sally. How can I help with RowPulser?
 
+Ask about your app, training zones or heart-rate monitor. If we can’t solve it here, I can help pass a summary to the development team.</div></div>
+ <div class="sally-compose">
+  <form id="sallyForm" class="sally-form"><label for="sallyInput" class="sally-sr">Your message to Sally</label><textarea id="sallyInput" placeholder="Ask Sally about RowPulser…" maxlength="12000" required rows="1" enterkeyhint="send" aria-describedby="sallyKeyboard"></textarea><button id="sallySend" type="submit" disabled>Send</button></form>
+  <p class="sally-keyboard" id="sallyKeyboard">Enter to send · Shift + Enter for a new line</p>
+  <p class="sally-note">Sally uses AI and can make mistakes. Messages go to an AI service. Don’t share passwords or sensitive health information. <a href="/privacy.html#sally">Privacy</a></p>
+ </div>
+</aside>
+<script src="/assets/sally-chat.js" defer></script>
+</body></html>
