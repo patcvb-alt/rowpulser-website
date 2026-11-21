@@ -50,6 +50,8 @@ article + article { margin-top: 20px; }
 time { color: var(--muted); font-size: 15px; }
 h2 { font-size: clamp(23px, 4vw, 31px); line-height: 1.3; margin: 8px 0 16px; }
 article p { margin: 0; }
+.news-image { display: block; width: min(100%, 360px); margin-top: 20px; }
+.news-image img { display: block; width: 100%; height: auto; border-radius: 10px; }
 article a { color: #8acfff; text-underline-offset: 3px; }
 footer { padding: 30px 15px; text-align: center; border-top: 1px solid #284662; color: var(--muted); }
 footer a { color: var(--text); }
@@ -68,6 +70,12 @@ footer a { color: var(--text); }
 </header>
 <main>
   <h1>News</h1>
+  <article id="android-submitted">
+    <time datetime="2026-11-21">21 Nov 2026</time>
+    <h2>RowPulser for Android takes a step towards Google Play</h2>
+    <p>We’ve applied for production access for RowPulser on Google Play, and Google is reviewing our application. Thanks to everyone who helped with closed testing!</p>
+    <a class="news-image" href="/news/android-production-access.webp" aria-label="Open the Google Play Console screenshot"><img src="/news/android-production-access.webp" alt="Google Play Console confirms it received and is reviewing the production access application." width="640" height="1232"></a>
+  </article>
   <article id="app-store-launch">
     <time datetime="2026-11-13">13 Nov 2026</time>
     <h2>woohoo! RowPulser is now live on the App Store!</h2>
