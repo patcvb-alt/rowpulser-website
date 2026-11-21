@@ -24,14 +24,13 @@ form{text-align:left}label{display:block;font-weight:700;margin:15px 0 6px}input
 dialog{background:#102c4a;color:#f8fbff;border:1px solid #4a7395;border-radius:18px;padding:30px;max-width:min(90vw,440px);text-align:center;box-shadow:0 20px 65px #0009}dialog::backdrop{background:#000a}dialog h2{margin-top:0}dialog .button{margin-top:12px}
 footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:var(--muted)}footer a{color:white}
 @media(max-width:640px){header{flex-direction:column}.brand img{width:60px;height:60px}nav{justify-content:center;gap:15px}section{padding:48px 5%}.hero{padding-top:36px}}
-.signup-embed{max-width:740px;margin:28px auto 0}
 </style>
 <link rel="stylesheet" href="/assets/sally-chat.css">
 </head>
 <body>
 <header>
 <a class="brand" href="#top" aria-label="RowPulser home"><img src="rowpulser-logo.png" alt="RowPulser rowing heart logo"></a>
-<nav aria-label="Main navigation"><a href="https://apps.apple.com/ie/app/rowpulser/id6817870155" target="_blank" rel="noopener noreferrer">iPhone app</a><a href="#demo">Demo</a><a href="#feedback">Android beta testing</a><a href="/news/">News</a></nav>
+<nav aria-label="Main navigation"><a href="https://apps.apple.com/ie/app/rowpulser/id6817870155" target="_blank" rel="noopener noreferrer">iPhone app</a><a href="#demo">Demo</a><a href="#feedback">Feedback</a><a href="/news/">News</a></nav>
 </header>
 <main id="top">
 <div class="hero">
@@ -40,12 +39,10 @@ footer{padding:30px 15px;text-align:center;border-top:1px solid #284662;color:va
 <a class="button" href="https://apps.apple.com/ie/app/rowpulser/id6817870155" target="_blank" rel="noopener noreferrer" aria-label="Download RowPulser on the Apple App Store">Download on the App Store</a>
 </div>
 <section id="demo"><h2>See RowPulser in action</h2><div class="panel"><iframe class="video-embed" src="https://www.youtube-nocookie.com/embed/tqWmbpJVHW4" title="RowPulser demonstration featuring Sally Ripley" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></section>
-<section id="feedback" aria-labelledby="betaTitle"><h2 id="betaTitle">Android testers wanted</h2><p class="muted">We’re currently recruiting Android users only. Help shape the next release of RowPulser and we’ll email you when a testing place is available.</p>
-<p class="muted">Using an iPhone? <a href="https://apps.apple.com/ie/app/rowpulser/id6817870155" target="_blank" rel="noopener noreferrer">Download RowPulser now on the Apple App Store</a>.</p>
-<p class="form-note">This signup is for Android beta testing only. By signing up, you ask us to email you about RowPulser beta testing. Phone and heart-rate strap models are optional and help us plan compatibility testing. <a href="/privacy.html">Privacy Policy</a>.</p>
-<div class="signup-embed"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLScOo7pnir6_nJ6Dh5iNx6LCM8UYf14MfHetyXo6r_lUjqTsyQ/viewform?embedded=true" title="RowPulser Android beta signup form" width="100%" height="1450" style="border:0;display:block;border-radius:12px;background:#f0ebf8" loading="lazy">Loading signup form…</iframe></div>
-<p class="form-note">Having trouble with the form? <a href="https://docs.google.com/forms/d/e/1FAIpQLScOo7pnir6_nJ6Dh5iNx6LCM8UYf14MfHetyXo6r_lUjqTsyQ/viewform" target="_blank" rel="noopener">Open the signup form</a>.</p></section>
+<section id="feedback" aria-labelledby="feedbackTitle"><h2 id="feedbackTitle">Help improve RowPulser</h2><p class="muted">Suggestions, feature requests and bug reports are welcome.</p>
+<div class="panel"><form id="feedbackForm" aria-describedby="feedbackPrivacy" action="https://formspree.io/f/xgaavbrr" method="POST"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required maxlength="100"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200"><label for="type">Feedback type</label><select id="type" name="feedback_type"><option>Suggestion</option><option>Feature request</option><option>Bug report</option><option>General feedback</option></select><label for="message">Your feedback</label><textarea id="message" name="message" required maxlength="5000" placeholder="Tell us what you think..."></textarea><p class="form-note" id="feedbackPrivacy">We use your email to follow up on your feedback. <a href="/privacy.html#feedback">Privacy Policy</a>.</p><button class="button" type="submit">Send feedback</button><p id="formStatus" role="status" aria-live="polite" class="muted"></p></form></div></section>
 </main>
+<dialog id="feedbackThanks" aria-labelledby="thanksTitle"><h2 id="thanksTitle">A note from Sally</h2><p>Thanks for taking the time to send feedback!</p><p>— Sally x</p><button class="button" id="closeThanks" type="button">Close</button></dialog>
 <footer><p>© 2026 RowPulser. All rights reserved.</p><p><a href="/privacy.html">Privacy Policy</a></p><p>Contact: <a href="mailto:Sally@rowpulser.com">Sally@rowpulser.com</a></p></footer>
 <button class="sally-launch" id="sallyLaunch" type="button" aria-controls="sallyChat" aria-expanded="false">
  <picture><source media="(prefers-reduced-motion: reduce)" srcset="/assets/sally-idle.png"><img class="sally-avatar" src="/assets/sally-idle.gif" alt="" width="62" height="62"></picture>
@@ -66,5 +63,37 @@ Ask about your app, training zones or heart-rate monitor. If we can’t solve it
   <p class="sally-note">Sally uses AI and can make mistakes. Messages go to an AI service. Don’t share passwords or sensitive health information. <a href="/privacy.html#sally">Privacy</a></p>
  </div>
 </aside>
+<script>
+const feedbackForm = document.getElementById('feedbackForm');
+const formStatus = document.getElementById('formStatus');
+const thanksDialog = document.getElementById('feedbackThanks');
+document.getElementById('closeThanks').addEventListener('click', () => thanksDialog.close());
+feedbackForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const button = feedbackForm.querySelector('button[type="submit"]');
+  button.disabled = true;
+  button.textContent = 'Sending...';
+  formStatus.textContent = '';
+  try {
+    const response = await fetch(feedbackForm.action, {
+      method: 'POST',
+      body: new FormData(feedbackForm),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!response.ok) throw new Error('Submission failed');
+    feedbackForm.reset();
+    if (typeof thanksDialog.showModal === 'function') {
+      thanksDialog.showModal();
+    } else {
+      formStatus.textContent = 'Thanks for taking the time to send feedback!';
+    }
+  } catch (error) {
+    formStatus.textContent = 'Your feedback could not be sent. Please try again or email sally@rowpulser.com.';
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Send feedback';
+  }
+});
+</script>
 <script src="/assets/sally-chat.js" defer></script>
 </body></html>
